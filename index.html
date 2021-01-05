@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <link rel="stylesheet" href="./css/normalize.css" type="text/css">
   <link rel="stylesheet" href="./css/style.css" type="text/css">
 
@@ -13,9 +13,50 @@
 </head>
 
 <body>
+  <div class="wrapper">
+    <header>
+      <a href="#">Local Storage</a>
+      <a href="#">Sign In</a>
+    </header>
+    <main>
+      <div>
+        <button id="add-book" class="add-book">Add Book</button>
+      </div>
+      <div class="form-popup">
+        <form id="myForm" class="form-container">
+          <div>
+            <label for="title"><b>Title</b></label>
+            <div>
+              <input id="title" type="text" placeholder="Enter Title" name="title" required>
+            </div>
+          </div>
+          <div>
+            <label for="author"><b>Author</b></label>
+            <div>
+              <input id="author" type="text" placeholder="Enter Author name" name="author" required>
+            </div>
+          </div>
+          <div>
+            <label for="pages"><b>Pages</b></label>
+            <div>
+              <input id="pages" type="text" placeholder="Enter # of Pages" name="pages" required>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit">Submit</button>
+          <button type="reset" class="btn-cancel">Cancel</button>
+        </form>
+      </div>
+      <div id="book-container" class="book-container">
+      </div>
+
+    </main>
+    <footer>
+
+    </footer>
+  </div>
 
 
-  
+
 </body>
 
 </html>

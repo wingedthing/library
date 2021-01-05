@@ -1,25 +1,112 @@
 const myLibrary = [];
+let idNum = 1;
 
-function Book(title, author, numPages, hasRead) {
-  //constructor
-  this.title = title
-  this.author = author
-  this.pages = numPages
-  this.hasRead = hasRead
+function Book(title, author, numPages, idNum) {
+  this._title = title
+  this._author = author
+  this._pages = numPages
+  this._hasRead = false
+  this._id = `a${idNum}`
 }
 
 Book.prototype.info = function() {
-  return `${this.title} by ${this.author}, ${this.pages} pages, Has read:${this.hasRead}`
+  return [`"${this._title}"`, this._author, `${this._pages} pages`];
 }
 
-function addBookToLibrary(title, author, numPages, hasRead) {
+Book.prototype.getId = function() {
+  return this._id;
+}
+
+Book.prototype.setHasRead = function() {
+  if (!this._hasRead) {
+    this._hasRead = true;
+  }else {
+    this._hasRead = false;
+  }
+}
+
+
+function addBookToLibrary([title, author, numPages]) {
   /*take user input, use to create new book object, 
   * store book in array*/ 
-  const book = new Book(title, author, numPages, hasRead);
+  const book = new Book(title, author, numPages, idNum);
   myLibrary.push(book);
+  idNum++;
+  createBookCard(book);
 }
 
-addBookToLibrary('The Hobbit', 'J.R.R Tolkien', 295, false);
-addBookToLibrary('The Castle', 'Franz Kafka', 300, true);
-console.table(myLibrary);
-console.log(myLibrary);
+function createBookCard(book) {
+  let card = document.createElement('div');
+  card.classList.add("card");
+  let container = document.getElementById('book-container').appendChild(card);
+  let data = book.info();
+
+  function makeDocFrag(tagString) {
+    let range = document.createRange();
+    return range.createContextualFragment(tagString);
+  }
+  
+  data.forEach(e => {
+    container.appendChild(makeDocFrag(`<p class="card-text">${e}</p>`));
+  });
+  
+  function makeRoundedSwitch() {
+    container.appendChild(makeDocFrag(
+      `<label class="switch">
+          <input id="${book.getId()}" type="checkbox">
+          <span class="slider round"></span>
+      </label>`));
+    let checkbox = document.getElementById(book.getId());
+    checkbox.addEventListener('change', e => {
+      book.setHasRead();
+    })
+    console.log(checkbox);
+  }
+  makeRoundedSwitch();
+
+  function makeRemoveButton() {
+    container.appendChild(makeDocFrag(
+      `<button type="button" class="remove-button">Remove</button>`
+    ));
+    let removeButton = container.lastChild;
+    
+    removeButton.addEventListener('click', e =>{
+      container.remove();
+      let indexToRemove = myLibrary.findIndex(e => e._id === e.getId());
+      myLibrary.splice(indexToRemove,1);
+
+    })
+  }
+  makeRemoveButton();
+
+}
+
+const myForm = document.getElementById('myForm');
+const addBookButton = document.getElementById('add-book');
+const popup = document.querySelector('.form-popup');
+const cancel = document.querySelector('.btn-cancel');
+
+addBookButton.addEventListener('click', () => {
+  popup.style.display = 'block';
+});
+
+cancel.addEventListener('click', () => popup.style.display = 'none');
+
+myForm.addEventListener("submit", e => {
+  e.preventDefault();
+  new FormData(myForm);
+});
+
+myForm.addEventListener('formdata', e => {
+  console.log('formdata fired');
+  let data = e.formData;
+  let dataArr = [];
+
+  for (var value of data.values()) {
+    dataArr.push(value);
+  }
+
+  addBookToLibrary(dataArr);
+  console.log(myLibrary);
+});
+

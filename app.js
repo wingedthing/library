@@ -1,6 +1,22 @@
 const myLibrary = [];
 let idNum = 1;
 
+window.onload = (event) => {
+  if (localStorage.getItem('library') !== null){
+    idNum = JSON.parse(localStorage.getItem('idNum'));
+    let tempLib = JSON.parse(localStorage.getItem('library'));
+    tempLib.forEach(book => {
+      book.__proto__ = new Book()
+      myLibrary.push(book);
+      createBookCard(book);
+    });
+  }
+}
+
+function populateLibraryOnReload() {
+  myLibrary.forEach(book => createBookCard(book));
+}
+
 function Book(title, author, numPages, idNum) {
   this._title = title
   this._author = author
@@ -15,6 +31,10 @@ Book.prototype.info = function() {
 
 Book.prototype.getId = function() {
   return this._id;
+}
+
+Book.prototype.getHasRead = function() {
+  return this._hasRead;
 }
 
 Book.prototype.setHasRead = function() {
@@ -32,7 +52,13 @@ function addBookToLibrary([title, author, numPages]) {
   const book = new Book(title, author, numPages, idNum);
   myLibrary.push(book);
   idNum++;
+  addLibraryToLocalStorage();
   createBookCard(book);
+}
+
+function addLibraryToLocalStorage(){
+  localStorage.setItem('library', JSON.stringify(myLibrary));
+  localStorage.setItem('idNum', idNum);
 }
 
 function createBookCard(book) {
@@ -57,8 +83,11 @@ function createBookCard(book) {
           <span class="slider round"></span>
       </label>`));
     let checkbox = document.getElementById(book.getId());
+    console.dir(checkbox);
+    checkbox.checked = book._hasRead;
     checkbox.addEventListener('change', e => {
       book.setHasRead();
+      addLibraryToLocalStorage();
     })
     console.log(checkbox);
   }
@@ -72,9 +101,9 @@ function createBookCard(book) {
     
     removeButton.addEventListener('click', e =>{
       container.remove();
-      let indexToRemove = myLibrary.findIndex(e => e._id === e.getId());
+      let indexToRemove = myLibrary.findIndex(e => e._id == book.getId());
       myLibrary.splice(indexToRemove,1);
-
+      addLibraryToLocalStorage();
     })
   }
   makeRemoveButton();

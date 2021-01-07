@@ -44,8 +44,7 @@
   }
 
   function addBookToLibrary([title, author, numPages]) {
-    /*take user input, use to create new book object, 
-    * store book in array*/
+    // Take user input, use to create new book object, store book in array
     const book = new Book(title, author, numPages, idNum);
     myLibrary.push(book);
     idNum++;
@@ -134,6 +133,25 @@
 
   }
 
+  function localStorageLinkEvents() {
+    const storageLink = document.getElementById('local-storage');
+    const clearPopup = document.getElementById('clear-popup');
+    const yesBtn = document.getElementById('clear-yes');
+    const cancelBtn = document.getElementById('clear-cancel');
+    
+    storageLink.addEventListener('click', () => {
+      clearPopup.style.display = 'block';
+    });
+    yesBtn.addEventListener('click', () => {
+      localStorage.clear();
+      location.reload();
+    });
+    cancelBtn.addEventListener('click', () => {
+      clearPopup.style.display = 'none';
+    });
+  }
+
+  localStorageLinkEvents();
   createFormEvents();
 
 })();

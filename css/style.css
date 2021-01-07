@@ -29,6 +29,38 @@ header a {
   text-decoration: none;
 }
 
+.clear-popup {
+  position: fixed;
+  display: none;
+  z-index: 2;
+  background-color:rgba(0, 0, 0, .7);
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  top: 25%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 35%;
+  font-size: 1.5rem;
+}
+
+.clear-popup p:first-child {
+  color:white;
+}
+.clear-popup p:first-child b {
+  color: red;
+}
+
+ .clear-popup p:last-of-type {
+   color: white;
+ }
+
+.clear-popup button {
+  display: inline;
+  width: 30%;
+}
+
 @media (min-width: 800px) {
   header {
     justify-content: space-around;

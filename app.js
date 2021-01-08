@@ -44,7 +44,6 @@
   }
 
   function addBookToLibrary([title, author, numPages]) {
-    // Take user input, use to create new book object, store book in array
     const book = new Book(title, author, numPages, idNum);
     myLibrary.push(book);
     idNum++;

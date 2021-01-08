@@ -110,13 +110,21 @@
     const popup = document.querySelector('.form-popup');
     const cancel = document.querySelector('.btn-cancel');
 
-    addBookButton.addEventListener('click', () => popup.style.display = 'block');
+    addBookButton.addEventListener('click', (e) => {
+      popup.style.display = 'flex';
+      e.target.style.display = 'none';
+    });
 
-    cancel.addEventListener('click', () => popup.style.display = 'none');
+    cancel.addEventListener('click', () =>{
+       popup.style.display = 'none';
+       addBookButton.style.display ='inline-block';
+      });
 
     myForm.addEventListener("submit", e => {
       e.preventDefault();
       new FormData(myForm);
+      popup.style.display = 'none';
+      addBookButton.style.display ='inline-block';
     });
 
     myForm.addEventListener('formdata', e => {
@@ -129,6 +137,7 @@
       }
 
       addBookToLibrary(dataArr);
+      myForm.reset();
     });
 
   }

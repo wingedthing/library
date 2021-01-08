@@ -216,12 +216,33 @@ input:checked + .slider:before {
 }
 
 footer {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 1rem;
   display: flex;
+  flex-direction: row;
   height: 3rem;
   position: absolute;
   width: 100vw;
   bottom: 0;
+  justify-content: space-between;
+}
+
+footer p {
+  align-self: start;
+  margin: 0;
+  margin-top: .2rem;
+  margin-bottom: .5rem;
+  color: white;
+}
+
+footer div:first-of-type {
+  margin-left: 1rem;
+}
+
+footer div:last-of-type {
+  align-self: center;
+  margin-right: 1rem;
+
 }
 
 @media (min-width: 800px) {

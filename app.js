@@ -24,7 +24,7 @@
   }
 
   Book.prototype.info = function () {
-    return [`"${this._title}"`, this._author, `${this._pages} pages`];
+    return [`"${this._title}"`, this._author];
   }
 
   Book.prototype.getId = function () {
@@ -37,16 +37,16 @@
 
   Book.prototype.setHasRead = function () {
     if (!this._hasRead) {
-      this._hasRead = true;
+      return this._hasRead = true;
     } else {
-      this._hasRead = false;
+      return this._hasRead = false;
     }
   }
 
   function bookSearch(book, card) {
     let title = book._title.replace(/\s+/g, '+');
     let author = book._author.split(' ').pop();
-    let thumbnailUrl;
+    let googleBookId;
 
     $.ajax({
       type: 'GET',
@@ -54,8 +54,12 @@
       dataType: "json",
 
       success: function(data) {
-        thumbnailUrl = JSON.stringify(data.items[0].volumeInfo.imageLinks.thumbnail);
-        card.style.cssText = `background-image: url(${thumbnailUrl});`;
+        googleBookId = data.items[0].id;
+
+        if(data.items[0].volumeInfo.imageLinks){
+        card.style.cssText = `background-image: url(https://books.google.com/books/content/images/frontcover/${googleBookId}?fife=w400-h600);`;
+        }
+        console.log(data);
       },
 
       error: function(xhr, error) {
@@ -82,7 +86,10 @@
   function createBookCard(book) {
     let card = document.createElement('div');
     card.classList.add("card");
-    bookSearch(book, card);
+    let cardImg = document.createElement('div');
+    cardImg.classList.add("card-img");
+    card.appendChild(cardImg);
+    bookSearch(book, cardImg);
     let container = document.getElementById('book-container').appendChild(card);
     let data = book.info();
 
@@ -97,18 +104,25 @@
 
     function makeRoundedSwitch() {
       container.appendChild(makeDocFrag(
-        `<label class="switch">
-          <input id="${book.getId()}" type="checkbox">
-          <span class="slider round"></span>
-      </label>`));
+        `<div class="switch-container">
+          <label class="switch">
+            <input id="${book.getId()}" type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          <span id="hasRead-${book.getId()}"></span>
+        </div>`));
       let checkbox = document.getElementById(book.getId());
+      let readText = document.getElementById('hasRead-'+book.getId());
+      (book._hasRead) ? readText.classList.toggle('read') : readText.classList.toggle('unread');
       checkbox.checked = book._hasRead;
       checkbox.addEventListener('change', e => {
-        book.setHasRead();
+        book.setHasRead()
+        readText.classList.toggle('read');
+        readText.classList.toggle('unread');
         addLibraryToLocalStorage();
       })
     }
-    makeRoundedSwitch();
+     makeRoundedSwitch();
 
     function makeRemoveButton() {
       container.appendChild(makeDocFrag(
@@ -123,7 +137,7 @@
         addLibraryToLocalStorage();
       })
     }
-    makeRemoveButton();
+     makeRemoveButton();
 
   }
 

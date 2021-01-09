@@ -43,6 +43,29 @@
     }
   }
 
+  function bookSearch(book, card) {
+    let title = book._title.replace(/\s+/g, '+');
+    let author = book._author.split(' ').pop();
+    let thumbnailUrl;
+
+    $.ajax({
+      type: 'GET',
+      url: "https://www.googleapis.com/books/v1/volumes?q=" + title + "+inauthor:" + author,
+      dataType: "json",
+
+      success: function(data) {
+        thumbnailUrl = JSON.stringify(data.items[0].volumeInfo.imageLinks.thumbnail);
+        card.style.cssText = `background-image: url(${thumbnailUrl});`;
+      },
+
+      error: function(xhr, error) {
+        console.log(xhr); console.log(error);
+      }
+
+    });
+    
+  }
+
   function addBookToLibrary([title, author, numPages]) {
     const book = new Book(title, author, numPages, idNum);
     myLibrary.push(book);
@@ -59,6 +82,7 @@
   function createBookCard(book) {
     let card = document.createElement('div');
     card.classList.add("card");
+    bookSearch(book, card);
     let container = document.getElementById('book-container').appendChild(card);
     let data = book.info();
 

@@ -145,12 +145,12 @@
 
     function makeRemoveButton() {
       container.appendChild(makeDocFrag(
-        `<button type="button" class="remove-button">Remove</button>`
+        `<button id="remove${book.getId()}" type="button" class="remove-button">Remove</button>`
       ));
-      let removeButton = container.lastChild;
+      let removeButton = document.getElementById(`remove${book.getId()}`);
 
       removeButton.addEventListener('click', e => {
-        container.remove();
+        card.remove();
         let indexToRemove = myLibrary.findIndex(e => e._id == book.getId());
         myLibrary.splice(indexToRemove, 1);
         addLibraryToLocalStorage();

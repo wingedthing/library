@@ -48,7 +48,25 @@
     this._googleBooksData = dataObj;
   }
 
-  function bookSearch(book, cardImg, defaultText) {
+  Book.prototype.getGoogleData = function() {
+    if(this._googleBooksData){
+      return this._googleBooksData
+    }else {
+      return false;
+    }
+  }
+
+  Book.prototype.getBuyLink = function() {
+    if(this.getGoogleData() && this._googleBooksData.items[0].saleInfo.buyLink){
+      return this._googleBooksData.items[0].saleInfo.buyLink;
+    }else {
+      let title = this._title.replace(/\s+/g, '+');
+      let author = this._author.split(' ').pop();
+      return `https://www.google.com/search?tbm=bks&q=${title}+${author}`;
+    }
+  }
+
+  function bookSearch(book, cardImg, defaultText, btnContainer) {
     let title = book._title.replace(/\s+/g, '+');
     let author = book._author.split(' ').pop();
     let googleBookId;
@@ -62,10 +80,12 @@
         if (!data.items) {
           cardImg.style.cssText = `background-image: url(./images/redBook.jpg)`;
           defaultText.style.display = "flex";
+          btnContainer.appendChild(makeDocFrag(`<a href=${book.getBuyLink()} target="_blank" class="buy-button">Buy</a>`));
           return
         } else {
           googleBookId = data.items[0].id;
           book.setGoogleData(data);
+          btnContainer.appendChild(makeDocFrag(`<a href=${book.getBuyLink()} target="_blank" class="buy-button">Buy</a>`));
           console.log(book);
         }
 
@@ -85,6 +105,11 @@
 
     });
 
+  }
+
+  function makeDocFrag(tagString) {
+    let range = document.createRange();
+    return range.createContextualFragment(tagString);
   }
 
   function addBookToLibrary([title, author, numPages]) {
@@ -113,16 +138,9 @@
     });
     cardImg.appendChild(defaultText);
     card.appendChild(cardImg);
-    bookSearch(book, cardImg, defaultText);
     let dropDown = document.createElement('div');
     dropDown.classList.add('card-drop-down');
     let container = document.getElementById('book-container').appendChild(card).appendChild(dropDown);
-
-
-    function makeDocFrag(tagString) {
-      let range = document.createRange();
-      return range.createContextualFragment(tagString);
-    }
 
     data.forEach(e => {
       container.appendChild(makeDocFrag(`<p class="card-text">${e}</p>`));
@@ -150,8 +168,12 @@
     }
     makeRoundedSwitch();
 
+    let btnContainer = document.createElement('div');
+    btnContainer.classList.add('btn-container');
+    container.appendChild(btnContainer);
+
     function makeRemoveButton() {
-      container.appendChild(makeDocFrag(
+      btnContainer.appendChild(makeDocFrag(
         `<button id="remove${book.getId()}" type="button" class="remove-button">Remove</button>`
       ));
       let removeButton = document.getElementById(`remove${book.getId()}`);
@@ -163,8 +185,9 @@
         addLibraryToLocalStorage();
       })
     }
-    makeRemoveButton();
 
+    makeRemoveButton();
+    
     card.appendChild(makeDocFrag(`
     <div id="arrow${book.getId()}" class="arrow-container">
     <i class="fas fa-chevron-down"></i>
@@ -177,6 +200,8 @@
       n -= 180;
       dropDown.classList.toggle("card-drop-up");
     })
+
+    bookSearch(book, cardImg, defaultText, btnContainer);
   }
 
   function createFormEvents() {

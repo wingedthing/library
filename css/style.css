@@ -180,6 +180,41 @@ header a {
   justify-content: center;
 }
 
+.btn-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.buy-button {
+  display: block;
+  flex-grow: 1;
+  text-decoration: none;
+  text-align: center;
+  padding: 6px;
+  margin-right: 1.5rem;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, .5);
+  color: rgb(231, 229, 229);
+  order: 1;
+}
+
+.remove-button {
+  display: block;
+  bottom: 10px; 
+  border-radius: 10px;
+  padding: 5px;
+  text-align: center;
+  align-self: center;
+  justify-self: end;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgb(231, 229, 229);
+  border: solid transparent 1px;
+  flex-grow: 1;
+  order: 5;
+}
+
 .arrow-container {
   display: flex;
   flex-direction: row;
@@ -235,21 +270,6 @@ header a {
   word-wrap: break-all;
   white-space:normal;
   width: 150px;
-}
-
-.card button {
-  display: block;
-  bottom: 10px;
-  margin-top: .5rem; 
-  border-radius: 10px;
-  padding: 5px;
-  text-align: center;
-  align-self: flex-start;
-  justify-self: end;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: rgb(231, 229, 229);
-  border: solid transparent 1px;
-  flex-grow: 1;
 }
 
 .card-text {

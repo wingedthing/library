@@ -89,10 +89,16 @@ header a {
 
 .clear-popup button {
   width: 6rem;
-  padding: 5px;
+  padding: 10px;
   text-align: center;
   margin-right: 5px;
   margin-left: 5px;
+  border: 0px none transparent;
+  border-radius: 5px;
+}
+
+.clear-popup button:hover{
+  background-color: rgb(247, 247, 247) !important;
 }
 
 .form-popup {
@@ -133,6 +139,13 @@ header a {
   margin-top: 10px;
   border-radius: 10px;
   padding: 10px;
+  margin-left: 10px;
+  border: 0px none;
+  box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.9);
+}
+
+.add-book:hover {
+  background-color: rgb(247, 247, 247) !important;
 }
 
 .book-container {

@@ -53,18 +53,18 @@
       url: "https://www.googleapis.com/books/v1/volumes?q=" + title + "+inauthor:" + author,
       dataType: "json",
 
-      success: function(data) {
-        if(!data.items){
+      success: function (data) {
+        if (!data.items) {
           cardImg.style.cssText = `background-image: url(./images/redBook.jpg)`;
           defaultText.style.display = "flex";
           return
-        }else {
+        } else {
           googleBookId = data.items[0].id;
         }
 
-        if(data.items[0].volumeInfo.imageLinks){
-        cardImg.style.cssText = `background-image: url(https://books.google.com/books/content/images/frontcover/${googleBookId}?fife=w400-h600);`;
-        }else {
+        if (data.items[0].volumeInfo.imageLinks) {
+          cardImg.style.cssText = `background-image: url(https://books.google.com/books/content/images/frontcover/${googleBookId}?fife=w400-h600);`;
+        } else {
           cardImg.style.cssText = `background-image: url(./images/redBook.jpg)`;
           defaultText.style.display = "flex";
         }
@@ -72,12 +72,12 @@
         console.log(data);
       },
 
-      error: function(xhr, error) {
+      error: function (xhr, error) {
         console.log(xhr); console.log(error);
       }
 
     });
-    
+
   }
 
   function addBookToLibrary([title, author, numPages]) {
@@ -107,8 +107,10 @@
     cardImg.appendChild(defaultText);
     card.appendChild(cardImg);
     bookSearch(book, cardImg, defaultText);
-    let container = document.getElementById('book-container').appendChild(card);
-    
+    let dropDown = document.createElement('div');
+    dropDown.classList.add('card-drop-down');
+    let container = document.getElementById('book-container').appendChild(card).appendChild(dropDown);
+
 
     function makeDocFrag(tagString) {
       let range = document.createRange();
@@ -129,7 +131,7 @@
           <span id="hasRead-${book.getId()}"></span>
         </div>`));
       let checkbox = document.getElementById(book.getId());
-      let readText = document.getElementById('hasRead-'+book.getId());
+      let readText = document.getElementById('hasRead-' + book.getId());
       (book._hasRead) ? readText.classList.toggle('read') : readText.classList.toggle('unread');
       checkbox.checked = book._hasRead;
       checkbox.addEventListener('change', e => {
@@ -139,7 +141,7 @@
         addLibraryToLocalStorage();
       })
     }
-     makeRoundedSwitch();
+    makeRoundedSwitch();
 
     function makeRemoveButton() {
       container.appendChild(makeDocFrag(
@@ -154,8 +156,20 @@
         addLibraryToLocalStorage();
       })
     }
-     makeRemoveButton();
+    makeRemoveButton();
 
+    card.appendChild(makeDocFrag(`
+    <div id="arrow${book.getId()}" class="arrow-container">
+    <i class="fas fa-chevron-down"></i>
+    </div>`));
+
+    let trigger = document.getElementById(`arrow${book.getId()}`)
+    let n = 180;
+    trigger.addEventListener('click', (e) => {
+      e.target.style.cssText = `transform: rotate(${n}deg);`;
+      n -= 180;
+      dropDown.classList.toggle("card-drop-up");
+    })
   }
 
   function createFormEvents() {
@@ -169,16 +183,16 @@
       e.target.style.display = 'none';
     });
 
-    cancel.addEventListener('click', () =>{
-       popup.style.display = 'none';
-       addBookButton.style.display ='inline-block';
-      });
+    cancel.addEventListener('click', () => {
+      popup.style.display = 'none';
+      addBookButton.style.display = 'inline-block';
+    });
 
     myForm.addEventListener("submit", e => {
       e.preventDefault();
       new FormData(myForm);
       popup.style.display = 'none';
-      addBookButton.style.display ='inline-block';
+      addBookButton.style.display = 'inline-block';
     });
 
     myForm.addEventListener('formdata', e => {
@@ -201,7 +215,7 @@
     const clearPopup = document.getElementById('clear-popup');
     const yesBtn = document.getElementById('clear-yes');
     const cancelBtn = document.getElementById('clear-cancel');
-    
+
     storageLink.addEventListener('click', () => {
       clearPopup.style.display = 'block';
     });

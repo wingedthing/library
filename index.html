@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="./css/normalize.css" type="text/css">
   <link rel="stylesheet" href="./css/style.css" type="text/css">
-  
+
   <script src="https://kit.fontawesome.com/36e1595aa0.js" crossorigin="anonymous"></script>
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./app.js" type="text/javascript"></script>
@@ -16,52 +16,48 @@
 
 <body>
   <div class="page-container">
-  <div class="wrapper">
-    <header>
-      <a id="local-storage" href="#">Clear Local Storage</a>
-      <div id="clear-popup" class="clear-popup">
-        <p><b>Warning</b> this will remove all books from your library and memory!</p>
-        <p>Proceed?</p>
-        <button id="clear-yes" type="button">Yes</button>
-        <button id="clear-cancel" type="button">Cancel</button>
-      </div>
-      <a id="sign-in" href="#">Sign In</a>
-    </header>
-    <main>
-      <div>
-        <button id="add-book" class="add-book">+Add Book</button>
-      </div>
-      <div class="form-popup">
-        <form id="myForm" class="form-container">
-          <div>
-            <input id="title" type="text" placeholder="Title" name="title" maxlength="40" required>
-          </div>
+    <div class="wrapper">
+      <header>
+        <a id="local-storage" href="#">Clear Local Storage</a>
+        <div id="clear-popup" class="clear-popup">
+          <p><b>Warning</b> this will remove all books from your library and memory!</p>
+          <p>Proceed?</p>
+          <button id="clear-yes" type="button">Yes</button>
+          <button id="clear-cancel" type="button">Cancel</button>
+        </div>
+        <a id="sign-in" href="#">Sign In</a>
+      </header>
+      <main>
+        <div>
+          <button id="add-book" class="add-book">+Add Book</button>
+        </div>
+        <div class="form-popup">
+          <form id="myForm" class="form-container">
+            <div>
+              <input id="title" type="text" placeholder="Title" name="title" maxlength="40" required>
+            </div>
             <div>
               <input id="author" type="text" placeholder="Author Name" name="author" maxlength="30" required>
             </div>
-          <button type="submit" class="btn-submit">Submit</button>
-          <button type="reset" class="btn-cancel">Cancel</button>
-        </form>
+            <button type="submit" class="btn-submit">Submit</button>
+            <button type="reset" class="btn-cancel">Cancel</button>
+          </form>
+        </div>
+        <div id="book-container" class="book-container">
+        </div>
+      </main>
+    </div>
+    <footer>
+      <div>
+        <p>Javascript Web Dev 101</p>
+        <a href="https://www.theodinproject.com/lessons/library" target="_blank">The Odin Project</a>
       </div>
-      <div id="book-container" class="book-container">
+      <div>
+        <a class="github-link" href="https://github.com/wingedthing/library" target="_blank"><img
+            src="https://github.githubassets.com/favicons/favicon.png" alt="github logo"></a>
       </div>
-
-    </main>
+    </footer>
   </div>
-  <footer>
-    <div>
-      <p>Javascript Web Dev 101</p>
-      <a href="https://www.theodinproject.com/lessons/library" target="_blank">The Odin Project</a>
-    </div>
-    <div>
-      <a class="github-link" href="https://github.com/wingedthing/library" target="_blank"><img src="https://github.githubassets.com/favicons/favicon.png" alt="github logo"></a>
-    </div>
-
-  </footer>
-</div>
-
-
-
 </body>
 
 </html>

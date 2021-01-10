@@ -139,6 +139,7 @@ header a {
   justify-content: space-evenly;
   justify-content: left;
   margin-bottom: 1rem;
+  align-items: flex-start;
 }
 
 .card {
@@ -147,12 +148,12 @@ header a {
   flex-direction: column;
   min-width: 200px;
   max-width: 200px;
-  min-height: 500px;
+  min-height: 350px;
   background-color: rgba(95, 95, 104, .5);
   border: rgb(219, 208, 208) 3px solid;
   border-radius: 10px;
   margin: 1em 0px 0px 1em;
-  padding: 0px 10px 10px 10px;
+  padding: 0px 10px 0px 10px;
   line-height: 1.3;
   font-size: 1.1em;
   box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.2);
@@ -171,6 +172,45 @@ header a {
   border-bottom: solid 3px rgb(219, 208, 208);
   margin-bottom: 0px;
   display: flex;
+}
+
+.arrow-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
+  align-self: center;
+  margin: 0;
+  padding:0;
+}
+
+.fas {
+  font-size: 2rem;
+  color: black;
+  margin-top: auto;
+  margin-bottom: auto;
+  transform: rotate(0deg);
+}
+
+.card-drop-down, .card-drop-up {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  padding: 0;
+  margin: 0;
+  color: transparent;
+  transition: all .5s ease-in-out;
+  height: 0px;
+  overflow-y: hidden;
+  -webkit-transition: max-height 0.8s ease-in-out;
+  -moz-transition: max-height 0.8s ease-in-out;
+  -o-transition: max-height 0.8s ease-in-out;
+  transition: max-height 0.8s ease-in-out;
+}
+
+.card-drop-up {
+  height: 200px;
 }
 
 .default-text {

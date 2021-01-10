@@ -21,6 +21,7 @@
     this._pages = numPages
     this._hasRead = false
     this._id = `a${idNum}`
+    this._googleBooksData;
   }
 
   Book.prototype.info = function () {
@@ -43,6 +44,10 @@
     }
   }
 
+  Book.prototype.setGoogleData = function(dataObj) {
+    this._googleBooksData = dataObj;
+  }
+
   function bookSearch(book, cardImg, defaultText) {
     let title = book._title.replace(/\s+/g, '+');
     let author = book._author.split(' ').pop();
@@ -60,6 +65,8 @@
           return
         } else {
           googleBookId = data.items[0].id;
+          book.setGoogleData(data);
+          console.log(book);
         }
 
         if (data.items[0].volumeInfo.imageLinks) {

@@ -43,7 +43,7 @@
     }
   }
 
-  function bookSearch(book, card) {
+  function bookSearch(book, cardImg, defaultText) {
     let title = book._title.replace(/\s+/g, '+');
     let author = book._author.split(' ').pop();
     let googleBookId;
@@ -54,11 +54,21 @@
       dataType: "json",
 
       success: function(data) {
-        googleBookId = data.items[0].id;
+        if(!data.items){
+          cardImg.style.cssText = `background-image: url(./images/redBook.jpg)`;
+          defaultText.style.display = "flex";
+          return
+        }else {
+          googleBookId = data.items[0].id;
+        }
 
         if(data.items[0].volumeInfo.imageLinks){
-        card.style.cssText = `background-image: url(https://books.google.com/books/content/images/frontcover/${googleBookId}?fife=w400-h600);`;
+        cardImg.style.cssText = `background-image: url(https://books.google.com/books/content/images/frontcover/${googleBookId}?fife=w400-h600);`;
+        }else {
+          cardImg.style.cssText = `background-image: url(./images/redBook.jpg)`;
+          defaultText.style.display = "flex";
         }
+
         console.log(data);
       },
 
@@ -84,14 +94,21 @@
   }
 
   function createBookCard(book) {
+    let data = book.info();
     let card = document.createElement('div');
     card.classList.add("card");
     let cardImg = document.createElement('div');
     cardImg.classList.add("card-img");
+    let defaultText = document.createElement('div');
+    defaultText.classList.add("default-text");
+    data.forEach(e => {
+      defaultText.appendChild(makeDocFrag(`<p>${e}</p>`));
+    });
+    cardImg.appendChild(defaultText);
     card.appendChild(cardImg);
-    bookSearch(book, cardImg);
+    bookSearch(book, cardImg, defaultText);
     let container = document.getElementById('book-container').appendChild(card);
-    let data = book.info();
+    
 
     function makeDocFrag(tagString) {
       let range = document.createRange();

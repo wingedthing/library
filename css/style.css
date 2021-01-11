@@ -23,8 +23,10 @@ body {
   min-height: 100vh;
   max-width: 90vw;
   margin-left: 5vw;
-  background-image: url("../images/library.jpg");
+  background-image: url("../images/libraryResize.jpg");
   background-size: auto 100vh;
+  -webkit-background-size: auto 100vh;
+  -moz-background-size: auto 100vh;
   background-repeat: repeat-y;
   background-position: center;
 }
@@ -445,6 +447,11 @@ footer div:last-of-type {
   .clear-popup {
     max-width: 50vw;
   }
+
+.page-container {
+  background-image: url("../images/library.jpg");
+}
+
 }
 
 @media (min-width: 1170px) {

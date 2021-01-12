@@ -18,6 +18,10 @@ body {
   margin: 0;
 }
 
+button {
+  background-color: #f7f7f7;
+}
+
 .page-container {
   position: relative;
   min-height: 100vh;
@@ -97,6 +101,7 @@ header a {
   margin-left: 5px;
   border: 0px none transparent;
   border-radius: 5px;
+  background-color: rgb(247, 247, 247);
 }
 
 .clear-popup button:hover{
@@ -115,6 +120,10 @@ header a {
   margin-top: 10px;
   flex-direction: column;
   justify-content: space-evenly;
+}
+
+.form-container {
+  background-color: transparent;
 }
 
 .form-popup input {
@@ -144,6 +153,7 @@ header a {
   margin-left: 10px;
   border: 0px none;
   box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.9);
+  background-color:rgb(247, 247, 247);
 }
 
 .add-book:hover {

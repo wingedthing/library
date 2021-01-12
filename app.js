@@ -221,21 +221,11 @@
 
     myForm.addEventListener("submit", e => {
       e.preventDefault();
-      new FormData(myForm);
+      const title = e.target[0].value;
+      const author = e.target[1].value;
       popup.style.display = 'none';
       addBookButton.style.display = 'inline-block';
-    });
-
-    myForm.addEventListener('formdata', e => {
-      console.log('formdata fired');
-      let data = e.formData;
-      let dataArr = [];
-
-      for (var value of data.values()) {
-        dataArr.push(value);
-      }
-
-      addBookToLibrary(dataArr);
+      addBookToLibrary([title, author]);
       myForm.reset();
     });
 

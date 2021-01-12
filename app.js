@@ -15,10 +15,9 @@
     }
   }
 
-  function Book(title, author, numPages, idNum) {
+  function Book(title, author, idNum) {
     this._title = title
     this._author = author
-    this._pages = numPages
     this._hasRead = false
     this._id = `a${idNum}`
     this._googleBooksData;
@@ -89,7 +88,7 @@
           console.log(book);
         }
 
-        if (data.items[0].volumeInfo.imageLinks) {
+        if (data.items[0].volumeInfo.imageLinks && data.items[0].volumeInfo.title == book._title) {
           cardImg.style.cssText = `background-image: url(https://books.google.com/books/content/images/frontcover/${googleBookId}?fife=w400-h600);`;
         } else {
           cardImg.style.cssText = `background-image: url(./images/redBook.jpg)`;
@@ -112,8 +111,8 @@
     return range.createContextualFragment(tagString);
   }
 
-  function addBookToLibrary([title, author, numPages]) {
-    const book = new Book(title, author, numPages, idNum);
+  function addBookToLibrary([title, author]) {
+    const book = new Book(title, author, idNum);
     myLibrary.push(book);
     idNum++;
     addLibraryToLocalStorage();

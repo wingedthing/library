@@ -61,7 +61,8 @@
     }else {
       let title = this._title.replace(/\s+/g, '+');
       let author = this._author.split(' ').pop();
-      return `https://www.google.com/search?tbm=bks&q=${title}+${author}`;
+      return `https://play.google.com/store/search?q=${title}&c=books`;
+      // return `https://www.google.com/search?tbm=bks&q=${title}+${author}`;
     }
   }
 
